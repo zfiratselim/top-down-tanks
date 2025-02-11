@@ -4,15 +4,15 @@ import SpriteManager from "../../SpriteManager";
 const textureNames = ["explosion1.png", "explosion2.png", "explosion3.png", "explosion4.png", "explosion5.png"];
 
 
-export default class Explosion {
-  explosion: PIXI.Sprite;
+export default class Explosion extends PIXI.Sprite {
   index = 0;
-  x = 0;
-  y = 0;
+
 
   constructor(x: number, y: number) {
+    super();
     this.x = x;
     this.y = y;
+    this.anchor.set(.5, .5);
     this.create();
   }
 
@@ -23,10 +23,10 @@ export default class Explosion {
     if (!texture) {
       return console.error("texture is not loaded");
     }
-    this.explosion = new PIXI.Sprite(texture);
-    this.explosion.anchor.set(.5, .5);
-    this.explosion.x = this.x;
-    this.explosion.y = this.y;
+    this.texture = texture;
+    setInterval(() => {
+      this.updateTexture();
+    }, 200);
   }
 
   updateTexture() {
@@ -36,12 +36,6 @@ export default class Explosion {
       return console.error("texture is not loaded");
     }
 
-    this.explosion.texture = texture;
-  }
-
-  addToStage(stage: PIXI.Container) {
-    console.log(this.explosion, "asdasdasd");
-    stage.addChild(this.explosion);
-    setInterval(() => this.updateTexture(), 500);
+    this.texture = texture;
   }
 }

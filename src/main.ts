@@ -2,8 +2,8 @@ import * as PIXI from "pixi.js";
 
 import SpriteManager from "./game/SpriteManager";
 import TileMap from "./game/TileMap";
+import TankController from "./game/entities/tank/TankController";
 
-import { TankType } from "./types/Enum";
 const r = 13;
 const width = 64 * r;
 const height = 64 * 10;
@@ -23,7 +23,8 @@ export default class Game extends PIXI.Application {
       SpriteManager.load().then(() => {
         this.TileMap = new TileMap(rowNumber - r);
         this.TileMap.addToStage(this.stage);
-
+        const tankController = new TankController(100, 100);
+        this.stage.addChild(tankController)
         this.renderer.resize(w, height);
         view.width = w;
         view.height = height;

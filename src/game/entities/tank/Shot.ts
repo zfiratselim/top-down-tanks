@@ -1,31 +1,19 @@
 import * as PIXI from "pixi.js";
 import SpriteManager from "../../SpriteManager";
 
-export default class Shot {
-  Shot: PIXI.Sprite;
-  x: number;
-  y: number;
-
+export default class Shot extends PIXI.Sprite {
   constructor(x: number, y: number) {
+    super();
     this.x = x;
     this.y = y;
-    this.createShot();
+    this.anchor.set(.5, 0);
+    this.rotation = -Math.PI / 2
+    this.generateTexture();
   }
-
-  private createShot() {
+  generateTexture() {
     const shotTexture = SpriteManager.getTexture("shotOrange.png");
-
-    if (!shotTexture) {
-      return console.error("shotTexture is not loaded");
+    if (shotTexture) {
+      this.texture = shotTexture;
     }
-
-    this.Shot = new PIXI.Sprite(shotTexture);
-    this.Shot.y = this.x;
-    this.Shot.y = this.y;
-    this.Shot.anchor.set(.5, 0);
-  }
-
-  addToStage(stage: PIXI.Container) {
-    stage.addChild(this.Shot);
   }
 }

@@ -1,6 +1,5 @@
 import * as PIXI from "pixi.js";
 import SpriteManager from "../../SpriteManager";
-import Shot from "./Shot";
 import { TankType } from "../../../types/Enum";
 
 
@@ -9,14 +8,11 @@ function capitalizeFirstLetter(val: String) {
 }
 
 
-export default class Tank {
-  Tank: PIXI.Container = new PIXI.Container();
+export default class Tank extends PIXI.Container {
   type: TankType;
-  shot: Shot;
-  x: number;
-  y: number;
 
-  constructor(x: number, y: number, type: TankType) {
+  constructor(type: TankType, x: number, y: number) {
+    super();
     this.type = type;
     this.x = x;
     this.y = y;
@@ -38,23 +34,14 @@ export default class Tank {
     const tankBody = new PIXI.Sprite(tankBodyTexture);
     tankBody.anchor.set(.5);
 
-    const tankNoiseOutline = new PIXI.Sprite(tankBarrelTexture);
-    tankNoiseOutline.anchor.set(.5, 0);
-    tankNoiseOutline.x = 0;
-    tankNoiseOutline.y = -2;
+    const tankBarrel = new PIXI.Sprite(tankBarrelTexture);
+    tankBarrel.anchor.set(.5, 0);
+    tankBarrel.scale.set(1, 1.2)
+    tankBarrel.x = 0;
+    tankBarrel.y = -2;
 
-    this.shot = new Shot(0, 28);
 
-    this.Tank.addChild(tankBody, tankNoiseOutline);
-    this.shot.addToStage(this.Tank);
-
-    this.Tank.x = this.x;
-    this.Tank.y = this.y;
-    this.Tank.rotation = -Math.PI / 2
-  }
-
-  addToStage(stage: PIXI.Container) {
-    stage.addChild(this.Tank);
-    console.log(this.Tank.x, this.Tank.y);
+    this.addChild(tankBody, tankBarrel);
+    this.rotation = -Math.PI / 2
   }
 }
