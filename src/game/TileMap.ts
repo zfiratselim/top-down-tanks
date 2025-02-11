@@ -1,6 +1,6 @@
 import * as PIXI from "pixi.js";
 import SpriteManager from "./SpriteManager";
-import { tileType, tileNames, tile } from "../Config";
+import { tileType, tileNames, tile } from "../types/Config";
 
 export default class TileMap {
   tileCon = new PIXI.Container();

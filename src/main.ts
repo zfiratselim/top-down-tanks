@@ -2,18 +2,14 @@ import * as PIXI from "pixi.js";
 
 import SpriteManager from "./game/SpriteManager";
 import TileMap from "./game/TileMap";
-import Tank from "./game/Tank";
-import Explosion from "./game/Explosion";
 
-import { TankType } from "./Enum";
+import { TankType } from "./types/Enum";
 const r = 13;
 const width = 64 * r;
 const height = 64 * 10;
 
 export default class Game extends PIXI.Application {
   TileMap: TileMap;
-  Tank: Tank;
-  Explosion: Explosion;
 
   constructor(view: HTMLCanvasElement, rowNumber: number) {
     super();
@@ -27,12 +23,6 @@ export default class Game extends PIXI.Application {
       SpriteManager.load().then(() => {
         this.TileMap = new TileMap(rowNumber - r);
         this.TileMap.addToStage(this.stage);
-
-        this.Tank = new Tank(100, 100, TankType.green);
-        this.Tank.addToStage(this.stage);
-
-        this.Explosion = new Explosion(300, 100);
-        this.Explosion.addToStage(this.stage)
 
         this.renderer.resize(w, height);
         view.width = w;
