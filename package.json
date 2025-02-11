@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "source": "./index.html",
   "scripts": {
-    "start": "parcel index.html --public-url ./",
+    "start": "parcel index.html",
     "build": "parcel build index.html",
-    "rimraf": "rimraf .parcel-cache dist package-lock.json yarn.lock"
+    "nuke": "rimraf .parcel-cache dist package-lock.json yarn.lock"
   },
   "keywords": [],
   "author": "",

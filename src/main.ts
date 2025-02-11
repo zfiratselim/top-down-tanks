@@ -1,47 +1,64 @@
 import * as PIXI from "pixi.js";
 
 import SpriteManager from "./game/SpriteManager";
+import TileMap from "./game/TileMap";
 import Tank from "./game/Tank";
-import { TankType } from "./Enum";
+import Explosion from "./game/Explosion";
 
+import { TankType } from "./Enum";
+const r = 13;
+const width = 64 * r;
+const height = 64 * 10;
 
 export default class Game extends PIXI.Application {
-  constructor(view: HTMLCanvasElement) {
-    super();
+  TileMap: TileMap;
+  Tank: Tank;
+  Explosion: Explosion;
 
+  constructor(view: HTMLCanvasElement, rowNumber: number) {
+    super();
+    const w = (width / r) * rowNumber
     this.init({
       view: view,
       antialias: true,
-      width: 800,
-      height: 600,
+      width: (width / r) * rowNumber,
+      height,
     }).then(() => {
-      console.log("Oyun başlatıldı!");
       SpriteManager.load().then(() => {
-        const tank1 = new Tank(100, 100, TankType.green);
-        tank1.addToStage(this.stage)
+        this.TileMap = new TileMap(rowNumber - r);
+        this.TileMap.addToStage(this.stage);
 
-        const tank2 = new Tank(200, 100, TankType.blue);
-        tank2.addToStage(this.stage)
+        this.Tank = new Tank(100, 100, TankType.green);
+        this.Tank.addToStage(this.stage);
+
+        this.Explosion = new Explosion(300, 100);
+        this.Explosion.addToStage(this.stage)
+
+        this.renderer.resize(w, height);
+        view.width = w;
+        view.height = height;
+
+        this.startGame();
       })
-      // PixiJS'in boyutlarının Canvas'a yansıtıldığından emin ol
-      this.renderer.resize(800, 600);
-      view.width = 800;
-      view.height = 600;
 
-      this.startGame();
     });
   }
 
   private startGame() {
   }
-
-
 }
 
-// HTML'deki canvas'ı seç ve Game başlat
 const canvas = document.querySelector("#canvas") as HTMLCanvasElement;
 if (canvas) {
-  (window as any).context = new Game(canvas);
+  const w = window.innerWidth;
+  const h = window.innerHeight;
+  const radioW = w / width;
+  const radioH = h / height;
+  canvas.style.scale = `${radioH}`;
+  const rowNumber = Math.ceil(w / ((width * radioH) / r));
+  console.log(rowNumber, Math.ceil(rowNumber), radioW);
+
+  (window as any).context = new Game(canvas, rowNumber);
 } else {
   console.error("Canvas bulunamadı!");
 }

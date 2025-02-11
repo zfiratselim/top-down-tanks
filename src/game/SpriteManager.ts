@@ -9,7 +9,7 @@ export default class SpriteManager {
       const baseTexture = await PIXI.Assets.load("/assets/allSprites_default.png");
       const spriteJSON: SpriteJSON = await fetch('/assets/allSprites_default.json').then(d => d.json());
 
-      this.spriteList = spriteJSON.sprites; // spriteList'e JSON'dan gelen veriyi ata
+      this.spriteList = spriteJSON.sprites;
       this.texture = new PIXI.Texture(baseTexture);
     }
   }
