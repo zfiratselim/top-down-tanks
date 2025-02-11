@@ -1,7 +1,7 @@
 import * as PIXI from "pixi.js";
-import SpriteManager from "./SpriteManager";
+import SpriteManager from "../../SpriteManager";
 import Shot from "./Shot";
-import { TankType } from "../Enum";
+import { TankType } from "../../../types/Enum";
 
 
 function capitalizeFirstLetter(val: String) {

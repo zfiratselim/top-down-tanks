@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import SpriteManager from "./SpriteManager";
+import SpriteManager from "../../SpriteManager";
 
 const textureNames = ["explosion1.png", "explosion2.png", "explosion3.png", "explosion4.png", "explosion5.png"];
 

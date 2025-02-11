@@ -1,5 +1,5 @@
 import * as PIXI from "pixi.js";
-import SpriteManager from "./SpriteManager";
+import SpriteManager from "../../SpriteManager";
 
 export default class Shot {
   Shot: PIXI.Sprite;
