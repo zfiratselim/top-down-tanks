@@ -5,6 +5,7 @@ import Bullet from "./Bullet";
 import Explosion from "./Explosion";
 import { BulletType, TankType } from "../../../types/Enum";
 
+import ShootAnimation from "../../animations/Shoot/ShootAnimation";
 
 export default class TankController extends PIXI.Container {
   Tank: Tank;
@@ -18,28 +19,15 @@ export default class TankController extends PIXI.Container {
     this.Tank = new Tank(TankType.red, 0, 0);
     this.Shot = new Shot(0, 0);
     this.Explosion = new Explosion(-200, -200)
-    this.Bullet = new Bullet(BulletType.red, 0, 0, Math.PI / 2)
+    this.Bullet = new Bullet(BulletType.red, 27, 0, Math.PI / 2)
     this.addChild(this.Shot, this.Bullet, this.Tank, this.Explosion);
+
     this.shoot(300, 0);
   }
   shoot(x: number, y: number) {
-    this.Bullet.x = this.Tank.x;
-    this.Bullet.y = this.Tank.y;
-
-    const deltaX = (x - this.Bullet.x) / 20;
-    const deltaY = (y - this.Bullet.y) / 20;
-
-    const interval = setInterval(() => {
-      this.Bullet.x += deltaX;
-      this.Bullet.y += deltaY
-      if (this.Bullet.x == x) {
-        clearInterval(interval);
-        this.Bullet.x = -200;
-        this.Bullet.y = -200;
-        this.addExplosion(x, y);
-      }
-    }, 50)
+    new ShootAnimation(this, { x, y }, () => { });
   }
+
   addExplosion(x: number, y: number) {
     this.Explosion.x = x;
     this.Explosion.y = y;

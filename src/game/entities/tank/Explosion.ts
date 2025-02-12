@@ -13,29 +13,15 @@ export default class Explosion extends PIXI.Sprite {
     this.x = x;
     this.y = y;
     this.anchor.set(.5, .5);
-    this.create();
   }
+  getTextureNames = () => textureNames;
+  getTexture = (txture: string) => SpriteManager.getTexture(txture);
 
-  getTexture = () => SpriteManager.getTexture(textureNames[this.index]);
-
-  create() {
-    const texture = this.getTexture();
+  setTexture(txtre: string) {
+    const texture = this.getTexture(txtre);
     if (!texture) {
       return console.error("texture is not loaded");
     }
-    this.texture = texture;
-    setInterval(() => {
-      this.updateTexture();
-    }, 200);
-  }
-
-  updateTexture() {
-    this.index = (this.index + 1) % 5;
-    const texture = this.getTexture();
-    if (!texture) {
-      return console.error("texture is not loaded");
-    }
-
     this.texture = texture;
   }
 }

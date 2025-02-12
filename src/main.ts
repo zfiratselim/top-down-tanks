@@ -4,12 +4,15 @@ import SpriteManager from "./game/SpriteManager";
 import TileMap from "./game/TileMap";
 import TankController from "./game/entities/tank/TankController";
 
+import Animation from "./game/animations/Animation";
+
 const r = 13;
 const width = 64 * r;
 const height = 64 * 10;
 
 export default class Game extends PIXI.Application {
   TileMap: TileMap;
+  Animation = new Animation();
 
   constructor(view: HTMLCanvasElement, rowNumber: number) {
     super();
@@ -36,6 +39,11 @@ export default class Game extends PIXI.Application {
   }
 
   private startGame() {
+    this.ticker.add(delta => this.update(delta))
+  }
+  
+  update(delta: PIXI.Ticker) {
+    this.Animation.update(delta.lastTime);
   }
 }
 
